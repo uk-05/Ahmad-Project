@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuoteCraft – Quote & Status Generator</title>
+  <!-- Google Fonts for modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#home" class="logo">
+        <span class="logo-icon">✨</span> Quote<span>Craft</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#quotes">Quotes</a></li>
+        <li><a href="#categories">Categories</a></li>
+        <li><a href="#customizer">Custom Status</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================= HERO SECTION ================= -->
+  <header id="home" class="hero-section">
+    <div class="hero-content">
+      <span class="hero-badge">🌟 Daily Inspiration & Social Status</span>
+      <h1 class="hero-title">Express Your Feelings with Beautiful Quotes</h1>
+      <p class="hero-desc">
+        Find the perfect words for your WhatsApp status, Instagram captions, and daily inspiration.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="randomQuote(); scrollToSection('quotes')">
+          🎲 Generate Random Quote
+        </button>
+        <a href="#customizer" class="btn btn-secondary">
+          🎨 Create Custom Status
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="main-container">
+
+    <!-- ================= QUOTE GENERATOR SECTION ================= -->
+    <section id="quotes" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Quote of the Moment</h2>
+        <p class="section-subtitle">Click Next or Random to discover meaningful words</p>
+      </div>
+
+      <!-- Main Quote Display Card -->
+      <div class="quote-card-wrapper">
+        <div class="quote-card" id="quoteCard">
+          <div class="quote-card-header">
+            <span class="category-badge" id="quoteCategoryBadge">Motivation</span>
+            <span class="quote-symbol">“</span>
+          </div>
+          
+          <!-- Quote text and author -->
+          <p class="quote-text" id="quoteText">Loading inspirational quote...</p>
+          <div class="quote-author-box">
+            <span class="author-dash">—</span>
+            <span class="quote-author" id="quoteAuthor">Author Name</span>
+          </div>
+
+          <!-- Buttons inside quote card -->
+          <div class="quote-actions">
+            <button class="btn btn-action" onclick="copyQuote()">
+              📋 Copy Quote
+            </button>
+            <button class="btn btn-action" onclick="randomQuote()">
+              🎲 Surprise Me
+            </button>
+            <button class="btn btn-action btn-highlight" onclick="nextQuote()">
+              Next Quote ➔
+            </button>
+          </div>
+
+          <!-- Notification message when quote is copied -->
+          <div class="copy-alert" id="copyAlert">
+            ✅ Quote copied to clipboard!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= QUOTE CATEGORIES ================= -->
+    <section id="categories" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Explore by Category</h2>
+        <p class="section-subtitle">Choose a mood or vibe to explore tailored quotes</p>
+      </div>
+
+      <!-- Category Filter Buttons -->
+      <div class="category-grid">
+        <button class="cat-btn active" onclick="selectCategory('All', this)">
+          <span class="cat-icon">🌈</span>
+          <span class="cat-name">All Quotes</span>
+        </button>
+        <button class="cat-btn" onclick="selectCategory('Love', this)">
+          <span class="cat-icon">💖</span>
+          <span class="cat-name">Love</span>
+        </button>
+        <button class="cat-btn" onclick="selectCategory('Friendship', this)">
+          <span class="cat-icon">🤝</span>
+          <span class="cat-name">Friendship</span>
+        </button>
+        <button class="cat-btn" onclick="selectCategory('Motivation', this)">
+          <span class="cat-icon">🚀</span>
+          <span class="cat-name">Motivation</span>
+        </button>
+        <button class="cat-btn" onclick="selectCategory('Sad Quotes', this)">
+          <span class="cat-icon">🌧️</span>
+          <span class="cat-name">Sad Quotes</span>
+        </button>
+        <button class="cat-btn" onclick="selectCategory('Attitude', this)">
+          <span class="cat-icon">👑</span>
+          <span class="cat-name">Attitude</span>
+        </button>
+        <button class="cat-btn" onclick="selectCategory('Life Quotes', this)">
+          <span class="cat-icon">🌿</span>
+          <span class="cat-name">Life Quotes</span>
+        </button>
+        <button class="cat-btn" onclick="selectCategory('Funny Quotes', this)">
+          <span class="cat-icon">😂</span>
+          <span class="cat-name">Funny Quotes</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= CUSTOMIZE STATUS SECTION ================= -->
+    <section id="customizer" class="section">
+      <div class="section-header">
+        <h2 class="section-title">Design Your Custom Status</h2>
+        <p class="section-subtitle">Write your thoughts, customize colors, and copy directly to your social apps</p>
+      </div>
+
+      <div class="customizer-container">
+        
+        <!-- Left Side: Controls -->
+        <div class="customizer-controls">
+          <div class="control-group">
+            <label for="customInput" class="control-label">✍️ Type Your Status:</label>
+            <textarea 
+              id="customInput" 
+              rows="4" 
+              placeholder="Type your WhatsApp status or Instagram caption here..."
+              oninput="updateCustomStatus()"
+            ></textarea>
+          </div>
+
+          <!-- Background Color Presets -->
+          <div class="control-group">
+            <label class="control-label">🎨 Select Background Color:</label>
+            <div class="color-palette">
+              <button class="color-swatch" style="background: linear-gradient(135deg, #6b21a8, #ec4899);" onclick="changeCustomBg('linear-gradient(135deg, #6b21a8, #ec4899)')" title="Purple Pink"></button>
+              <button class="color-swatch" style="background: linear-gradient(135deg, #1e3a8a, #3b82f6);" onclick="changeCustomBg('linear-gradient(135deg, #1e3a8a, #3b82f6)')" title="Deep Blue"></button>
+              <button class="color-swatch" style="background: linear-gradient(135deg, #065f46, #10b981);" onclick="changeCustomBg('linear-gradient(135deg, #065f46, #10b981)')" title="Emerald"></button>
+              <button class="color-swatch" style="background: linear-gradient(135deg, #991b1b, #f97316);" onclick="changeCustomBg('linear-gradient(135deg, #991b1b, #f97316)')" title="Sunset"></button>
+              <button class="color-swatch" style="background: #111827;" onclick="changeCustomBg('#111827')" title="Midnight Dark"></button>
+              <button class="color-swatch" style="background: #ffffff; border: 2px solid #ccc;" onclick="changeCustomBg('#ffffff')" title="Pure White"></button>
+            </div>
+          </div>
+
+          <!-- Text Color Presets -->
+          <div class="control-group">
+            <label class="control-label">🔤 Select Text Color:</label>
+            <div class="color-palette">
+              <button class="color-swatch text-swatch" style="background: #ffffff;" onclick="changeCustomTextColor('#ffffff')" title="White"></button>
+              <button class="color-swatch text-swatch" style="background: #facc15;" onclick="changeCustomTextColor('#facc15')" title="Yellow"></button>
+              <button class="color-swatch text-swatch" style="background: #38bdf8;" onclick="changeCustomTextColor('#38bdf8')" title="Cyan"></button>
+              <button class="color-swatch text-swatch" style="background: #f472b6;" onclick="changeCustomTextColor('#f472b6')" title="Pink"></button>
+              <button class="color-swatch text-swatch" style="background: #111827;" onclick="changeCustomTextColor('#111827')" title="Black"></button>
+            </div>
+          </div>
+
+          <!-- Custom Status Buttons -->
+          <div class="custom-buttons">
+            <button class="btn btn-primary" onclick="copyCustomStatus()">
+              📋 Copy My Status
+            </button>
+            <button class="btn btn-secondary" onclick="resetCustomizer()">
+              🔄 Reset Default
+            </button>
+          </div>
+
+          <!-- Custom Status Alert -->
+          <div class="copy-alert" id="customCopyAlert">
+            ✅ Custom status copied to clipboard!
+          </div>
+        </div>
+
+        <!-- Right Side: Live Card Preview -->
+        <div class="customizer-preview-box">
+          <div class="preview-badge">Live Preview</div>
+          <div class="custom-card-preview" id="customCardPreview">
+            <div class="preview-quotes-mark">“</div>
+            <p id="customPreviewText">Your beautiful status preview will appear here in real time as you type...</p>
+            <div class="preview-footer">✨ QuoteCraft Status</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= ABOUT SECTION ================= -->
+    <section id="about" class="section">
+      <div class="about-card">
+        <h2 class="section-title">About QuoteCraft</h2>
+        <p class="about-text">
+          <strong>QuoteCraft</strong> is a lightweight, responsive web application built to inspire and empower your personal voice. 
+          Whether you need a motivating boost for the morning, an emotional quote for your WhatsApp status, 
+          or an aesthetic caption for Instagram, QuoteCraft delivers instant, beautiful words tailored to every emotion.
+        </p>
+        <div class="about-features">
+          <div class="feature-item">
+            <span class="feat-icon">⚡</span>
+            <h3>Fast & Simple</h3>
+            <p>Runs entirely in your web browser with clean, pure JavaScript.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feat-icon">🌈</span>
+            <h3>7+ Categories</h3>
+            <p>From love and friendship to motivation and funny quotes.</p>
+          </div>
+          <div class="feature-item">
+            <span class="feat-icon">🎨</span>
+            <h3>Custom Status Designer</h3>
+            <p>Type your personal thoughts, choose colors, and copy instantly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <p>© 2026 <strong>QuoteCraft</strong> – Quote & Status Generator. All rights reserved.</p>
+    <p class="footer-sub">Designed for students, creators, and daily inspiration seekers.</p>
+  </footer>
+
+  <!-- External JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
